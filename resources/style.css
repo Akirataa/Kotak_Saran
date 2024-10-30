@@ -30,6 +30,10 @@ body {
     color: #333;
 }
 
+.login-container img{
+    width: 50%;
+}
+
 /* Label dan input */
 .login-container label {
     display: block;
