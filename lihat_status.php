@@ -1,28 +1,47 @@
 <?php
-include 'db.php';
+include 'db.php'; // Pastikan koneksi ke database sudah benar
 
-$id_saran = isset($_GET['id_saran']) ? intval($_GET['id_saran']) : 0;
+header('Content-Type: application/json'); // Set header untuk JSON
 
-$response = ['message' => '', 'type' => ''];
+if (isset($_GET['id_saran'])) {
+    $id_saran = mysqli_real_escape_string($conn, $_GET['id_saran']);
+    
+    // Cek apakah ID saran valid (misalnya, apakah itu angka)
+    if (!is_numeric($id_saran)) {
+        echo json_encode([
+            'type' => 'error',
+            'message' => 'ID saran tidak valid.'
+        ]);
+        exit;
+    }
 
-if ($id_saran > 0) {
-    $query = "SELECT status FROM saran WHERE id = $id_saran";
+    $query = "SELECT * FROM saran WHERE id = '$id_saran'";
     $result = mysqli_query($conn, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $saran = mysqli_fetch_assoc($result);
-        $response['message'] = "Status saran Anda: " . htmlspecialchars($saran['status']);
-        $response['type'] = 'success';
+    
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+            $saran = mysqli_fetch_assoc($result);
+            echo json_encode([
+                'type' => 'success',
+                'message' => 'Saran Anda: ' . $saran['isi_saran'] . ' | Status: ' . $saran['status']
+            ]);
+        } else {
+            echo json_encode([
+                'type' => 'error',
+                'message' => 'ID saran tidak ditemukan.'
+            ]);
+        }
     } else {
-        $response['message'] = "Saran dengan ID tersebut tidak ditemukan.";
-        $response['type'] = 'error';
+        // Jika ada kesalahan pada query
+        echo json_encode([
+            'type' => 'error',
+            'message' => 'Terjadi kesalahan saat mengambil data: ' . mysqli_error($conn)
+        ]);
     }
 } else {
-    $response['message'] = "ID saran tidak valid.";
-    $response['type'] = 'error';
+    echo json_encode([
+        'type' => 'error',
+        'message' => 'ID saran tidak disediakan.'
+    ]);
 }
-
-// Mengembalikan data sebagai JSON
-header('Content-Type: application/json');
-echo json_encode($response);
 ?>
