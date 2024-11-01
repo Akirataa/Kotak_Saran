@@ -1,4 +1,3 @@
-/* Mengatur gaya dasar untuk seluruh halaman */
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +13,6 @@ body {
     background-color: #f2f2f2;
 }
 
-/* Kontainer utama untuk form login */
 .login-container {
     width: 100%;
     max-width: 400px;
@@ -34,7 +32,6 @@ body {
     width: 50%;
 }
 
-/* Label dan input */
 .login-container label {
     display: block;
     text-align: left;
@@ -60,7 +57,6 @@ body {
     border-color: #4a90e2;
 }
 
-/* Tombol login */
 .login-container button[type="submit"] {
     width: 100%;
     padding: 0.8rem;
@@ -78,14 +74,13 @@ body {
     background-color: #357abd;
 }
 
-/* Pesan error */
 .error-message {
     color: #e74c3c;
     font-size: 0.9rem;
     margin-top: 0.5rem;
 }
 
-/* Gaya halaman utama */
+/* halaman utama */
 body {
     background-color: #f4f6f9;
     font-family: 'Arial', sans-serif;
@@ -100,6 +95,7 @@ h1, h2 {
 }
 
 .card {
+    width: 300px;
     max-width: 600px;
     margin: auto;
     border: none;

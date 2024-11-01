@@ -12,20 +12,17 @@
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="itech.png" alt="I-TECH Logo" width="120%" height="50" class="d-inline-block align-text-top">
+            <img src="resources/itech.png" alt="I-TECH Logo" width="120%" height="50" class="d-inline-block align-text-top">
         </a>
         <a href="admin/login.php"> <button type="button" class="btn btn-primary rounded-pill">Login as Admin</button> </a>
     </div>
 </nav>
 
-<!-- Main Content -->
 <div class="container mt-5">
 
-    <!-- Suggestion Form -->
     <div class="card shadow-lg p-4 mb-5">
         <h1 class="text-center text-primary mb-4">Kotak Saran</h1>
         <form id="suggestionForm">
@@ -45,7 +42,6 @@
         </form>
     </div>
 
-    <!-- Status Check Form -->
     <div class="card shadow-lg p-4">
         <h2 class="text-center text-secondary mb-4">Lihat Status Saran</h2>
         <form id="statusForm">
@@ -58,13 +54,13 @@
     </div>
 </div>
 
-<!-- JavaScript -->
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCO6iF1V6KyL+dPaDho3L8ON3G5F4lhT8m2KrH1Ib3OrjKN3R8EoxRj4mNG5p6" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cvb82vZpVmtH+9EB7oj1MGXQ1NN6nNoI5p+fzmGjp+5W6qY6i5G2MSOVjAI/EXjO" crossorigin="anonymous"></script>
 <script>
-    // Handle form submission for suggestions
+
     document.getElementById('suggestionForm').onsubmit = function(event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); 
 
         const formData = new FormData(this);
 
@@ -80,7 +76,6 @@
                 icon: 'success',
                 confirmButtonText: 'OK'
             });
-            // Reset the form
             this.reset();
         })
         .catch(error => {
@@ -93,7 +88,6 @@
         });
     };
 
-    // Handle checking status
     document.getElementById('checkStatus').onclick = function() {
         const id_saran = document.getElementById('id_saran').value;
 
