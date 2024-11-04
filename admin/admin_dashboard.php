@@ -7,10 +7,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-//echo "Selamat datang di halaman admin!";
-
-// Mendapatkan data dari database
-$query = "SELECT * FROM saran"; // Pastikan nama tabel 'saran' sesuai
+$query = "SELECT * FROM saran"; 
 $result = mysqli_query($conn, $query);
 
 if (!$result) {

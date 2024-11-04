@@ -1,12 +1,11 @@
 <?php
-include 'db.php'; // Pastikan koneksi ke database sudah benar
+include 'db.php'; 
 
 header('Content-Type: application/json'); // Set header untuk JSON
 
 if (isset($_GET['id_saran'])) {
     $id_saran = mysqli_real_escape_string($conn, $_GET['id_saran']);
     
-    // Cek apakah ID saran valid (misalnya, apakah itu angka)
     if (!is_numeric($id_saran)) {
         echo json_encode([
             'type' => 'error',
@@ -32,7 +31,6 @@ if (isset($_GET['id_saran'])) {
             ]);
         }
     } else {
-        // Jika ada kesalahan pada query
         echo json_encode([
             'type' => 'error',
             'message' => 'Terjadi kesalahan saat mengambil data: ' . mysqli_error($conn)
