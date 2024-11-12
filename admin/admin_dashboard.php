@@ -11,14 +11,18 @@ $limit = 5; // Jumlah data per halaman
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
+// Cek apakah ada input pencarian
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$search_query = $search ? "WHERE nama LIKE '%$search%' OR email LIKE '%$search%' OR isi_saran LIKE '%$search%'" : '';
+
 // Query untuk menghitung total data
-$total_query = "SELECT COUNT(*) AS total FROM saran";
+$total_query = "SELECT COUNT(*) AS total FROM saran $search_query";
 $total_result = mysqli_query($conn, $total_query);
 $total_row = mysqli_fetch_assoc($total_result);
 $total_data = $total_row['total'];
 
 // Query untuk mendapatkan data dengan urutan terbaru dan pagination
-$query = "SELECT * FROM saran ORDER BY id DESC LIMIT $limit OFFSET $offset";
+$query = "SELECT * FROM saran $search_query ORDER BY id DESC LIMIT $limit OFFSET $offset";
 $result = mysqli_query($conn, $query);
 
 if (!$result) {
@@ -46,6 +50,14 @@ $total_pages = ceil($total_data / $limit);
         <h1>Halaman Admin</h1>
         <a href="logout.php" class="btn btn-danger">Logout</a>
     </div>
+
+    <!-- Form Pencarian -->
+    <form method="GET" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Cari nama, email, atau saran" value="<?= htmlspecialchars($search) ?>">
+            <button type="submit" class="btn btn-primary">Cari</button>
+        </div>
+    </form>
 
     <table class="table table-bordered table-hover shadow-sm">
         <thead class="table-primary">
@@ -93,7 +105,7 @@ $total_pages = ceil($total_data / $limit);
         <ul class="pagination justify-content-center">
             <?php if ($page > 1) : ?>
                 <li class="page-item">
-                    <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
+                    <a class="page-link" href="?page=<?= $page - 1 ?>&search=<?= htmlspecialchars($search) ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -101,13 +113,13 @@ $total_pages = ceil($total_data / $limit);
 
             <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
                 <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    <a class="page-link" href="?page=<?= $i ?>&search=<?= htmlspecialchars($search) ?>"><?= $i ?></a>
                 </li>
             <?php endfor; ?>
 
             <?php if ($page < $total_pages) : ?>
                 <li class="page-item">
-                    <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
+                    <a class="page-link" href="?page=<?= $page + 1 ?>&search=<?= htmlspecialchars($search) ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

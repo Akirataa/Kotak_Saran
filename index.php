@@ -76,7 +76,7 @@ if (!$result) {
                 <tr>
                     <th>ID</th>
                     <th>Nama</th>
-                    <th>Email</th>
+                    
                     <th>Saran</th>
                     <th>Status</th>
                 </tr>
@@ -86,7 +86,7 @@ if (!$result) {
                     <tr>
                         <td><?= htmlspecialchars($row['id']) ?></td>
                         <td><?= htmlspecialchars($row['nama']) ?></td>
-                        <td><?= htmlspecialchars($row['email']) ?></td>
+                        
                         <td><?= htmlspecialchars($row['isi_saran']) ?></td>
                         <td><?= htmlspecialchars($row['status']) ?></td>
                     </tr>
