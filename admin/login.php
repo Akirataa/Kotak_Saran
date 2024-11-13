@@ -1,7 +1,6 @@
 <?php
 session_start();
 include '../db.php';
-
 $error_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="../resources/style.css">
     <title>Document</title>
 </head>
-<body>
+<body class="login-body">
     <div class="login-container">
     <img src="../resources/itech.png" alt="">
         <h2>Login Admin</h2>
@@ -42,12 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <button type="submit">Login</button>
 </form>
     </div>
-
     <?php if (!empty($error_message)) : ?>
         <script>
             alert("<?php echo $error_message; ?>");
         </script>
     <?php endif; ?>
-
 </body>
 </html>
