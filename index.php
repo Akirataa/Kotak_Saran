@@ -1,9 +1,22 @@
+<?php
+include 'db.php';
+
+// Query untuk mengambil 5 saran terbaru
+$query = "SELECT * FROM saran ORDER BY id DESC LIMIT 5";
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
+    echo "Query error: " . mysqli_error($conn);
+    exit;
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="resource/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -23,6 +36,7 @@
 
 <div class="container mt-5">
 
+    <!-- Kotak Saran -->
     <div class="card shadow-lg p-4 mb-5">
         <h1 class="text-center text-primary mb-4">Kotak Saran</h1>
         <form id="suggestionForm">
@@ -42,7 +56,8 @@
         </form>
     </div>
 
-    <div class="card shadow-lg p-4">
+    <!-- Lihat Status Saran -->
+    <div class="card shadow-lg p-4 mb-5">
         <h2 class="text-center text-secondary mb-4">Lihat Status Saran</h2>
         <form id="statusForm">
             <div class="mb-3">
@@ -52,13 +67,40 @@
             <button type="button" id="checkStatus" class="btn btn-secondary w-100 rounded-pill">Lihat Status Saran</button>
         </form>
     </div>
+
+    <!-- Tabel 5 Saran Terbaru -->
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center text-dark mb-4">Saran Terbaru</h2>
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    
+                    <th>Saran</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row['id']) ?></td>
+                        <td><?= htmlspecialchars($row['nama']) ?></td>
+                        
+                        <td><?= htmlspecialchars($row['isi_saran']) ?></td>
+                        <td><?= htmlspecialchars($row['status']) ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCO6iF1V6KyL+dPaDho3L8ON3G5F4lhT8m2KrH1Ib3OrjKN3R8EoxRj4mNG5p6" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cvb82vZpVmtH+9EB7oj1MGXQ1NN6nNoI5p+fzmGjp+5W6qY6i5G2MSOVjAI/EXjO" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 <script>
-
+    // Formulir pengiriman saran
     document.getElementById('suggestionForm').onsubmit = function(event) {
         event.preventDefault(); 
 
@@ -88,6 +130,7 @@
         });
     };
 
+    // Cek status saran
     document.getElementById('checkStatus').onclick = function() {
         const id_saran = document.getElementById('id_saran').value;
 
